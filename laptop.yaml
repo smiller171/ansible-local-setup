@@ -1,0 +1,24 @@
+---
+- name: set up laptop
+  hosts: 127.0.0.1
+  connection: local
+  sudo: yes
+  tasks:
+  - name: install software
+    apt: update_cache=yes name={{item}} state=latest
+    with_items:
+    - python
+    - python-apt
+    - git
+    - build-essential
+    - git
+    - openssh-server
+    - zsh
+    - gimp
+    - ansible
+
+  - name: remove software
+    apt: name={{item}} state=absent
+    with_items:
+    - pinta
+    - imagemagick
