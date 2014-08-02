@@ -25,6 +25,7 @@
     - aptitude
     - kate
     - android-tools*
+    - s3cmd
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
