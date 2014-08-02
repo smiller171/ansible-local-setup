@@ -23,6 +23,7 @@
     - hal
     - unity-webapps-hulu-player
     - aptitude
+    - kate
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
