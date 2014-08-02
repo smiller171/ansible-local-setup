@@ -4,6 +4,9 @@
   connection: local
   sudo: yes
   tasks:
+  - name: hal repo
+    apt_repository: repo='ppa:mjblenner/ppa-hal' state=present
+
   - name: install software
     apt: update_cache=yes name={{item}} state=latest
     with_items:
@@ -16,9 +19,23 @@
     - zsh
     - gimp
     - ansible
+    - terminator
+    - hal
+    - unity-webapps-hulu-player
+    - aptitude
+
+  - name: apply updates
+    apt: upgrade=yes update_cache=yes
 
   - name: remove software
     apt: name={{item}} state=absent
     with_items:
     - pinta
     - imagemagick
+
+  - name: copy zsh files
+    sudo: no
+    synchronize: src=files/ dest=~/ recursive=yes
+
+  - name: change default terminal to terminator
+    shell: "gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'"
