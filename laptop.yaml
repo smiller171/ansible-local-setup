@@ -27,6 +27,7 @@
     - android-tools*
     - s3cmd
     - mosh
+    - gparted
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
