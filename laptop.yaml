@@ -28,6 +28,7 @@
     - s3cmd
     - mosh
     - gparted
+    - p7zip
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
