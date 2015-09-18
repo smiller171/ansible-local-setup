@@ -1,11 +1,22 @@
 ---
 - name: set up laptop
-  hosts: 127.0.0.1
+  hosts: localhost
   connection: local
   sudo: yes
   tasks:
-  - name: hal repo
-    apt_repository: repo='ppa:mjblenner/ppa-hal' state=present
+  - name: add java repo
+    sudo: yes
+    apt_repository: repo='ppa:webupd8team/java' state=present
+    register: result
+  
+  - name: Select Oracle License
+    sudo: yes
+    shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+    when: result.changed
+
+  - name: Install JRE
+    sudo: yes
+    apt: name=oracle-java8-installer state=latest update-cache=yes
 
   - name: install software
     apt: update_cache=yes name={{item}} state=latest
