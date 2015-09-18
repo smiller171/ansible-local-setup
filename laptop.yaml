@@ -24,6 +24,13 @@
     - mosh
     - gparted
     - p7zip
+    - numlockx
+
+  - name: enable numlock on boot
+    lineinfile:
+      dest: /etc/X11/xinit/xinitrc
+      line: "/usr/bin/numlockx on"
+      regexp: "^/usr/bin/numlockx "
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
