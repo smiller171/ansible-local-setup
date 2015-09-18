@@ -1,3 +1,5 @@
 [user]
 	name = Scott Miller
 	email = scott.miller171@gmail.com
+[push]
+	default = simple
