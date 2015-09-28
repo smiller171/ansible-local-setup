@@ -1,0 +1,23 @@
+---
+- name: set up laptop
+  hosts: localhost
+  connection: local
+  sudo: yes
+  tasks:
+  - name: install software
+    apt: update_cache=yes name={{item}} state=latest
+    with_items:
+    - python
+    - python-apt
+    - git
+    - ansible
+    - aptitude
+    - s3cmd
+
+  - name: copy ansible files
+    sudo: no
+    synchronize: src=files/.ansible/ dest=~/.ansible/ recursive=yes
+
+  - name: copy ansible config
+    sudo: no
+    synchronize: src=files/.ansible.cfg dest=~/.ansible.cfg
