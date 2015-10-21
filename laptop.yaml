@@ -34,14 +34,20 @@
     - openssh-server
     - zsh
     - ansible
-    - terminator
     - aptitude
-    - android-tools*
     - s3cmd
     - mosh
-    - gparted
     - p7zip
+
+  - name: install software
+    apt: update_cache=yes name={{item}} state=latest
+    with_items:
+    - terminator
+    - android-tools*
     - numlockx
+    - gparted
+    tags:
+    - gui
 
   - name: install zsh
     apt: update_cache=yes name=zsh state=latest
@@ -53,6 +59,8 @@
       dest: /etc/X11/xinit/xinitrc
       line: "/usr/bin/numlockx on"
       regexp: "^/usr/bin/numlockx "
+    tags:
+    - gui
 
   - name: apply updates
     apt: upgrade=yes update_cache=yes
@@ -71,3 +79,5 @@
 
   - name: change default terminal to terminator
     shell: "gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'"
+    tags:
+    - gui
