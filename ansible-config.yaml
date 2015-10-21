@@ -8,6 +8,7 @@
     apt: update_cache=yes name={{item}} state=latest
     with_items:
     - python
+    - python-dev
     - python-apt
     - git
     - ansible
