@@ -8,15 +8,21 @@
     sudo: yes
     apt_repository: repo='ppa:webupd8team/java' state=present
     register: result
+    tags:
+    - java
   
   - name: Select Oracle License
     sudo: yes
     shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
     when: result.changed
+    tags:
+    - java
 
   - name: Install JRE
     sudo: yes
     apt: name=oracle-java8-installer state=latest update-cache=yes
+    tags:
+    - java
 
   - name: install software
     apt: update_cache=yes name={{item}} state=latest
