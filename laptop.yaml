@@ -43,6 +43,11 @@
     - p7zip
     - numlockx
 
+  - name: install zsh
+    apt: update_cache=yes name=zsh state=latest
+    tags:
+    - zsh
+
   - name: enable numlock on boot
     lineinfile:
       dest: /etc/X11/xinit/xinitrc
@@ -61,6 +66,8 @@
   - name: copy zsh files
     sudo: no
     synchronize: src=files/ dest=~/ recursive=yes
+    tags:
+    - zsh
 
   - name: change default terminal to terminator
     shell: "gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'"
