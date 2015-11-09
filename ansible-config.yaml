@@ -22,3 +22,7 @@
   - name: copy ansible config
     sudo: no
     synchronize: src=files/.ansible.cfg dest=~/.ansible.cfg
+
+  - name: setup ansible log file
+    sudo: yes
+    file: path=/var/log/ansible.log state=touch mode=666

@@ -71,11 +71,15 @@
     - pinta
     - imagemagick
 
-  - name: copy zsh files
+  - name: copy files
     sudo: no
     synchronize: src=files/ dest=~/ recursive=yes
     tags:
     - zsh
+
+  - name: setup ansible log file
+    sudo: yes
+    file: path=/var/log/ansible.log state=touch mode=666
 
   - name: change default terminal to terminator
     shell: "gsettings set org.gnome.desktop.default-applications.terminal exec 'terminator'"
