@@ -2,28 +2,8 @@
 - name: set up laptop
   hosts: localhost
   connection: local
-  sudo: yes
+  become: yes
   tasks:
-  - name: add java repo
-    sudo: yes
-    apt_repository: repo='ppa:webupd8team/java' state=present
-    register: result
-    tags:
-    - java
-
-  - name: Select Oracle License
-    sudo: yes
-    shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
-    when: result.changed
-    tags:
-    - java
-
-  - name: Install JRE
-    sudo: yes
-    apt: name=oracle-java8-installer state=latest update-cache=yes
-    tags:
-    - java
-
   - name: install software
     apt: update_cache=yes name={{item}} state=latest
     with_items:
@@ -31,11 +11,8 @@
     - python-apt
     - git
     - build-essential
-    - openssh-server
     - zsh
-    - ansible
     - aptitude
-    - s3cmd
     - mosh
     - p7zip
 
@@ -45,14 +22,8 @@
     - terminator
     - android-tools*
     - numlockx
-    - gparted
     tags:
     - gui
-
-  - name: install zsh
-    apt: update_cache=yes name=zsh state=latest
-    tags:
-    - zsh
 
   - name: enable numlock on boot
     lineinfile:
@@ -65,20 +36,14 @@
   - name: apply updates
     apt: upgrade=yes update_cache=yes
 
-  - name: remove software
-    apt: name={{item}} state=absent
-    with_items:
-    - pinta
-    - imagemagick
-
   - name: copy files
-    sudo: no
+    become: no
     synchronize: src=files/ dest=~/ recursive=yes
     tags:
     - zsh
 
   - name: setup ansible log file
-    sudo: yes
+    become: yes
     file: path=/var/log/ansible.log state=touch mode=666
 
   - name: change default terminal to terminator

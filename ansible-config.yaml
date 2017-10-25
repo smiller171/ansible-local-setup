@@ -2,7 +2,7 @@
 - name: set up laptop
   hosts: localhost
   connection: local
-  sudo: yes
+  become: yes
   tasks:
   - name: install software
     apt: update_cache=yes name={{item}} state=latest
@@ -16,13 +16,13 @@
     - s3cmd
 
   - name: copy ansible files
-    sudo: no
+    become: no
     synchronize: src=files/.ansible/ dest=~/.ansible/ recursive=yes
 
   - name: copy ansible config
-    sudo: no
+    become: no
     synchronize: src=files/.ansible.cfg dest=~/.ansible.cfg
 
   - name: setup ansible log file
-    sudo: yes
+    become: yes
     file: path=/var/log/ansible.log state=touch mode=666
